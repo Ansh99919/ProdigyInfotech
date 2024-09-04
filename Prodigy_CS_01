@@ -1,0 +1,48 @@
+def encrypt(text, shift):
+    encrypted_text = ""
+    for char in text:
+        if char.isalpha():  # Check if the character is a letter
+            shift_amount = 65 if char.isupper() else 97
+            # Perform the shift
+            encrypted_char = chr((ord(char) - shift_amount + shift) % 26 + shift_amount)
+            encrypted_text += encrypted_char
+        else:
+            # If the character is not a letter, leave it as is
+            encrypted_text += char
+    return encrypted_text
+
+def decrypt(text, shift):
+    decrypted_text = ""
+    for char in text:
+        if char.isalpha():  # Check if the character is a letter
+            shift_amount = 65 if char.isupper() else 97
+            # Perform the reverse shift
+            decrypted_char = chr((ord(char) - shift_amount - shift) % 26 + shift_amount)
+            decrypted_text += decrypted_char
+        else:
+            # If the character is not a letter, leave it as is
+            decrypted_text += char
+    return decrypted_text
+
+def main():
+    # User input for message and shift value
+    mode = input("Choose mode: 'encrypt' or 'decrypt': ").strip().lower()
+    message = input("Enter your message: ")
+    try:
+        shift = int(input("Enter the shift value (0-25): "))
+    except ValueError:
+        print("Invalid shift value. Please enter an integer between 0 and 25.")
+        return
+
+    # Encrypt or decrypt based on the chosen mode
+    if mode == "encrypt":
+        encrypted_message = encrypt(message, shift)
+        print(f"Encrypted Message: {encrypted_message}")
+    elif mode == "decrypt":
+        decrypted_message = decrypt(message, shift)
+        print(f"Decrypted Message: {decrypted_message}")
+    else:
+        print("Invalid mode selected. Please choose either 'encrypt' or 'decrypt'.")
+
+if __name__ == "__main__":
+    main()
